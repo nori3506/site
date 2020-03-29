@@ -1,10 +1,5 @@
-<div class="wrapper">
-  <div class="custom-content">
-  {% if section.settings.title != blank %}
-    <div class="grid__item">
-      <h2 class="small--text-center">{{ section.settings.title | escape }}</h2>
-    </div>
-  {% endif %}
+<hr>
+<div class="custom-content">
   {% for block in section.blocks %}
     {% case block.settings.width %}
       {% when '25%' %}
@@ -26,10 +21,10 @@
           {% when 'html' %}
             {% if block.settings.code != blank %}
               <div class="rte" data-section-id="{{ section.id }}" data-section-type="featured-content-section">
-                <p class="textarea">{{ block.settings.code }}</p>
+                {{ block.settings.code }}
               </div>
             {% else %}
-              <div class="rte">
+              <div class="rte text-center">
                 {{ 'homepage.onboarding.no_content' | t }}
               </div>
             {% endif %}
@@ -41,7 +36,7 @@
     <div class="wrapper">
       <div class="grid">
         <div class="grid__item">
-          <div class="rte">
+          <div class="rte text-center">
             {{ 'homepage.onboarding.no_content' | t }}
           </div>
         </div>
@@ -56,72 +51,26 @@
 {% schema %}
 {
   "name": {
-    "da": "Tilpasset HTML",
-    "de": "Benutzerdefiniertes HTML",
-    "en": "Custom HTML",
-    "es": "HTML personalizado",
-    "fi": "Mukautettu HTML",
-    "fr": "Code HTML personnalisé",
-    "hi": "कस्टम HTML",
-    "it": "HTML personalizzato",
-    "ja": "HTMLをカスタムする",
-    "ko": "사용자 지정 HTML",
-    "nb": "Tilpasset HTML",
-    "nl": "Aangepaste HTML",
-    "pt-BR": "HTML personalizado",
-    "pt-PT": "HTML personalizado",
-    "sv": "Anpassa HTML",
-    "th": "HTML แบบกำหนดเอง",
-    "zh-CN": "自定义 HTML",
-    "zh-TW": "自訂 HTML"
+    "da": "Tilpasset indhold",
+    "de": "Personalisierter Content",
+    "en": "Custom content",
+    "es": "Contenido personalizado",
+    "fi": "Mukautettu sisältö",
+    "fr": "Contenu personnalisé",
+    "hi": "कस्टम सामग्री",
+    "it": "Contenuto personalizzato",
+    "ja": "コンテンツをカスタムする",
+    "ko": "사용자 지정 콘텐츠",
+    "nb": "Tilpasset innhold",
+    "nl": "Aangepaste content",
+    "pt-BR": "Conteúdo personalizado",
+    "pt-PT": "Conteúdo personalizado",
+    "sv": "Anpassat innehåll",
+    "th": "เนื้อหาแบบกำหนดเอง",
+    "zh-CN": "自定义内容",
+    "zh-TW": "自訂內容"
   },
   "max_blocks": 9,
-  "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": {
-        "da": "Overskrift",
-        "de": "Titel",
-        "en": "Heading",
-        "es": "Título",
-        "fi": "Otsake",
-        "fr": "Titre",
-        "hi": "शीर्षक",
-        "it": "Heading",
-        "ja": "見出し",
-        "ko": "제목",
-        "nb": "Overskrift",
-        "nl": "Kop",
-        "pt-BR": "Título",
-        "pt-PT": "Título",
-        "sv": "Rubrik",
-        "th": "ส่วนหัว",
-        "zh-CN": "标题",
-        "zh-TW": "標題"
-      },
-      "default": {
-        "da": "Fortæl om dit brand",
-        "de": "Über Ihre Marke sprechen",
-        "en": "Talk about your brand",
-        "es": "Habla de tu marca",
-        "fi": "Kerro brändistäsi",
-        "fr": "Parlez de votre marque",
-        "hi": "अपने ब्रांड के बारे में बात करें",
-        "it": "Parla del tuo brand",
-        "ja": "あなたのブランドについて語る",
-        "ko": "브랜드에 대해 이야기하기",
-        "nb": "Snakk om merkevaren din",
-        "nl": "Vertel over uw merk",
-        "pt-BR": "Fale sobre a sua marca",
-        "pt-PT": "Fale sobre a sua marca",
-        "sv": "Prata om ditt varumärke",
-        "th": "พูดถึงแบรนด์ของคุณ",
-        "zh-CN": "介绍您的品牌",
-        "zh-TW": "描述您的品牌"
-      }
-    }
-  ],
   "blocks": [
     {
       "type": "html",
@@ -170,24 +119,24 @@
             "zh-TW": "HTML"
           },
           "default": {
-            "da": "<strong>Brug HTML til at formatere din tekst, så den nemt kan læses.</strong> Denne tekst kan bruges til at dele oplysninger om dit brand med dine kunder.",
-            "de": "<strong>Formatieren Sie Ihren Text mit HTML, damit er leichter lesbar ist.</strong> Mit diesem Text können Sie Ihre Kunden über Ihre Marke informieren.",
-            "en": "<strong>Use HTML to format your text so it can be easily read.</strong> This text can be used to share information about your brand with customers.",
-            "es": "<strong>Usa HTML para formatear tu texto para que se pueda leer fácilmente.</strong> Este texto se puede usar para compartir información sobre tu marca con los clientes.",
-            "fi": "<strong>HTML-muodossa voit muotoilla tekstin niin, että sitä on helppo lukea.</strong> Tätä tekstiä voidaan käyttää brändiäsi koskevien tietojen jakamiseen asiakkaille.",
-            "fr": "<strong>Utilisez le code HTML pour formater votre texte afin qu'il puisse être facilement lu.</strong> Vous pouvez utiliser ce texte pour partager des informations sur votre marque avec les clients.",
-            "hi": "<strong>अपने टेक्स्ट को प्रारूपित करने के लिए HTML का उपयोग करें ताकि इसे आसानी से पढ़ा जा सके</strong>. इस टेक्स्ट का उपयोग ग्राहकों के साथ आपके ब्रैंड के बारे में जानकारी शेयर करने के लिए किया जा सकता है.",
-            "it": "<strong>Utilizza l'HTML per formattare il testo in modo che sia facilmente leggibile.</strong> Questo testo può essere utilizzato per condividere le informazioni sul tuo brand con i clienti.",
-            "ja": "<strong>テキストが読みやすくなるように、HTMLを使用して書式設定します。</strong>このテキストは、あなたのブランドに関する情報をお客様と共有するために使用できます。",
-            "ko": "<strong>HTML을 사용하여 텍스트를 형식화하여 쉽게 읽을 수 있습니다.</strong> 이 텍스트는 고객의 브랜드에 대한 정보를 공유하는데 사용할 수 있습니다.",
-            "nb": "<strong>Bruk HTML for å formatere teksten din så den er lettlest.</strong> Denne teksten kan brukes til å dele informasjon om merkevaren din med kundene.",
-            "nl": "<strong>Gebruik HTML om uw tekst op te maken, zodat deze makkelijk leesbaar is.</strong> Deze tekst kan worden gebruikt om informatie over uw merk met klanten te delen.",
-            "pt-BR": "<strong>Use HTML para formatar seu texto, assim ele pode ser lido com facilidade.</strong> Esse texto pode ser usado para compartilhar informações sobre sua marca com os clientes.",
-            "pt-PT": "<strong>Utilize HTML para formatar o seu texto, permitindo uma leitura simplificada.</strong> Este texto pode ser utilizado para partilhar informações sobre a sua marca com os clientes.",
-            "sv": "<strong>Använd HTML för att formatera din text så att den lätt kan läsas.</strong> Denna text kan användas för att dela information om ditt varumärke med kunder.",
-            "th": "<strong>ใช้ HTML เพื่อจัดรูปแบบข้อความของคุณให้อ่านง่าย</strong> ข้อความนี้สามารถใช้เพื่อแบ่งปันข้อมูลเกี่ยวกับแบรนด์ของคุณกับลูกค้าได้",
-            "zh-CN": "<strong>使用 HTML 设置文本格式，以便轻松阅读。</strong>此文本可用于与客户分享有关您品牌的信息。",
-            "zh-TW": "<strong>使用 HTML 設定文字格式以方便閱讀</strong>。此段文字可用來向顧客分享您的品牌資訊。"
+            "da": "<div style='text-align:center;'><h2>Brug HTML til at formatere din tekst, så den nemt kan læses.</h2> Denne tekst kan bruges til at dele oplysninger om dit brand med dine kunder.</div>",
+            "de": "<div style='text-align:center;'><h2>Formatieren Sie Ihren Text mit HTML, damit er leichter lesbar ist.</h2>Mit diesem Text können Sie Ihre Kunden über Ihre Marke informieren.</div>",
+            "en": "<div style='text-align:center;'><h2>Use HTML to format your text so it can be easily read.</h2>This text can be used to share information about your brand with customers.</div>",
+            "es": "<div style='text-align:center;'><h2>Usa HTML para formatear tu texto para que se pueda leer fácilmente</h2>. Este texto se puede usar para compartir información sobre tu marca con los clientes.</div>",
+            "fi": "<div style='text-align:center;'><h2>HTML-muodossa voit muotoilla tekstin niin, että sitä on helppo lukea.</h2> Tätä tekstiä voidaan käyttää brändiäsi koskevien tietojen jakamiseen asiakkaille.</div>",
+            "fr": "<div style='text-align:center;'><h2>Utilisez le code HTML pour formater votre texte afin qu'il puisse être facilement lu.</h2>Vous pouvez utiliser ce texte pour partager des informations sur votre marque avec les clients.</div>",
+            "hi": "<div style='text-align:center;'><h2>अपने टेक्स्ट को प्रारूपित करने के लिए HTML का उपयोग करें ताकि इसे आसानी से पढ़ा जा सके.</h2>इस पाठ का उपयोग ग्राहकों के साथ आपके ब्रांड के बारे में जानकारी शेयर करने के लिए किया जा सकता है.</div>",
+            "it": "<div style='text-align:center;'><h2>Utilizza l'HTML per formattare il tuo testo così che sia facilmente leggibile.</h2>Questo testo può essere usato per condividere le informazioni sul tuo brand con i clienti.</div>",
+            "ja": "<div style='text-align:center;'><h2>テキストが読みやすくなるように、HTMLを使用して書式設定します。</h2>このテキストは、あなたのブランドに関する情報をお客様と共有するために使用できます。</div>",
+            "ko": "<div style='text-align:center;'><h2>HTML을 사용하여 텍스트를 형식화하여 쉽게 읽을 수 있습니다.</h2>이 텍스트는 고객의 브랜드에 대한 정보를 공유하는데 사용할 수 있습니다.</div>",
+            "nb": "<div style='text-align:center;'><h2>Bruk HTML for å formatere teksten din så den er lettlest.</h2>Denne teksten kan brukes til å dele informasjon om merkevaren din med kundene.</div>",
+            "nl": "<div style='text-align:center;'><h2>Gebruik HTML om uw tekst op te maken, zodat deze makkelijk leesbaar is.</h2>Deze tekst kan worden gebruikt om informatie over uw merk met klanten te delen.</div>",
+            "pt-BR": "<div style='text-align:center;'><h2>Use HTML para formatar seu texto, assim ele pode ser lido com facilidade.</h2> Esse texto pode ser usado para compartilhar informações sobre sua marca com os clientes.</div>",
+            "pt-PT": "<div style='text-align:center;'><h2>Use HTML para formatar o seu texto, de forma a que este possa ser lido facilmente.</h2> Este texto pode ser utilizado para partilhar informações sobre a sua marca com os clientes.</div>",
+            "sv": "<div style='text-align:center;'><h2>Använd HTML för att formatera din text så att den lätt kan läsas.</h2> Den här texten kan användas för att dela information om ditt varumärke med kunder.</div>",
+            "th": "<div style='text-align:center;'><h2>ใช้ HTML ในการจัดรูปแบบข้อความของคุณเพื่อให้สามารถอ่านได้ง่าย</h2>สามารถใช้ข้อความนี้ในการแชร์ข้อมูลเกี่ยวกับแบรนด์ของคุณกับลูกค้า</div>",
+            "zh-CN": "<div style='text-align:center;'><h2>使用 HTML 设置文本格式，以便轻松阅读。</h2>此文本可用于与客户分享有关您的品牌的信息。</div>",
+            "zh-TW": "<div style='text-align:center;'><h2>使用 HTML 來設定文字格式，使文字易於閱讀。</h2>您可以利用此段文字跟顧客分享品牌資訊。</div>"
           }
         },
         {
@@ -457,24 +406,24 @@
   "presets": [
     {
       "name": {
-        "da": "Tilpasset HTML",
-        "de": "Benutzerdefiniertes HTML",
-        "en": "Custom HTML",
-        "es": "HTML personalizado",
-        "fi": "Mukautettu HTML",
-        "fr": "Code HTML personnalisé",
-        "hi": "कस्टम HTML",
-        "it": "HTML personalizzato",
-        "ja": "HTMLをカスタムする",
-        "ko": "사용자 지정 HTML",
-        "nb": "Tilpasset HTML",
-        "nl": "Aangepaste HTML",
-        "pt-BR": "HTML personalizado",
-        "pt-PT": "HTML personalizado",
-        "sv": "Anpassa HTML",
-        "th": "HTML แบบกำหนดเอง",
-        "zh-CN": "自定义 HTML",
-        "zh-TW": "自訂 HTML"
+        "da": "Tilpasset indhold",
+        "de": "Personalisierter Content",
+        "en": "Custom content",
+        "es": "Contenido personalizado",
+        "fi": "Mukautettu sisältö",
+        "fr": "Contenu personnalisé",
+        "hi": "कस्टम सामग्री",
+        "it": "Contenuto personalizzato",
+        "ja": "コンテンツをカスタムする",
+        "ko": "사용자 지정 콘텐츠",
+        "nb": "Tilpasset innhold",
+        "nl": "Aangepaste content",
+        "pt-BR": "Conteúdo personalizado",
+        "pt-PT": "Conteúdo personalizado",
+        "sv": "Anpassat innehåll",
+        "th": "เนื้อหาแบบกำหนดเอง",
+        "zh-CN": "自定义内容",
+        "zh-TW": "自訂內容"
       },
       "category": {
         "da": "Avanceret layout",

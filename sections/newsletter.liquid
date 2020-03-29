@@ -1,10 +1,16 @@
-<div data-section-id="{{ section.id }}" data-section-type="newsletter-section">
-  {% if section.settings.heading != blank %}
-    <h2 class="small--text-center">{{ section.settings.heading | escape }}</h2>
-  {% endif %}
-
-  {% include 'newsletter', label: section.settings.subtext %}
+<hr>
+<div class="text-centre">
+  <div class="section-header text-center">
+    {% if section.settings.heading != blank %}
+      <label for="Email" class="h1">{{ section.settings.heading | escape }}</label>
+    {% endif %}
+    {% unless section.settings.subtext == blank %}
+      {{ section.settings.subtext }}
+    {% endunless %}
+  </div>
+  {% include 'newsletter-form' %}
 </div>
+
 
 
 
@@ -103,7 +109,7 @@
         "da": "<p>Reklamer, nye produkter og salg. Direkte i din indbakke.</p>",
         "de": "<p>Werbeaktionen, neue Produkte und Sonderangebote. Direkt in Ihrem Posteingang.</p>",
         "en": "<p>Promotions, new products and sales. Directly to your inbox.</p>",
-        "es": "<p>Promociones, nuevos productos y ofertas. Directamente a tu bandeja de entrada.</p>",
+        "es": "<p>Promociones, nuevos productos y ventas. Directamente a tu bandeja de entrada.</p>",
         "fi": "<p>Kampanjat, uudet tuotteet ja myynti. Suoraan saapuneet-kansioosi</p>",
         "fr": "<p>Promotions, nouveaux produits et soldes. Directement dans votre boîte de réception.</p>",
         "hi": "<p>प्रमोशन, नए उत्पाद और सेल. सीधे आपके इनबॉक्स में.</p>",
@@ -112,10 +118,10 @@
         "ko": "<p>프로모션, 신제품, 판매. 받은 편지함으로 바로 이동.</p>",
         "nb": "<p>Kampanjer, nye produkter og salg. Direkte i innboksen din.</p>",
         "nl": "<p>Promoties, nieuwe producten en uitverkoop rechtstreeks in uw inbox.</p>",
-        "pt-BR": "<p>Promoções, novos produtos e vendas. Diretamente para sua caixa de entrada.</p>",
+        "pt-BR": "<p>Promoções, novos produtos e ofertas, diretamente em sua caixa de entrada.</p>",
         "pt-PT": "<p>Promoções, novos produtos e ofertas. Diretamente na sua caixa de entrada.</p>",
         "sv": "<p>Kampanjer, nya produkter och försäljning. Direkt till din inkorg.</p>",
-        "th": "<p>โปรโมชัน สินค้าใหม่ และการลดราคา ส่งตรงสู่กล่องจดหมายเข้าของคุณ</p>",
+        "th": "<p>โปรโมชัน สินค้าใหม่ และการลดราคา ตรงสู่กล่องจดหมายเข้าของคุณ</p>",
         "zh-CN": "<p>促销、新产品和销售。直接发送到您的收件箱。</p>",
         "zh-TW": "<p>讓您直接在收件匣內收取促銷活動、最新產品和特賣活動訊息。</p>"
       }
@@ -128,14 +134,14 @@
         "en": "Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers?query=&accepts_marketing=1)",
         "es": "Todos los clientes que se registren tendrán una cuenta creada para ellos en Shopify. [Ver clientes](/admin/customers?query=&accepts_marketing=1)",
         "fi": "Tilaaville asiakkaille luodaan tili Shopify-palvelussa. [Näytä asiakkaat](/admin/customers?query=&accepts_marketing=1)",
-        "fr": "Les clients qui s'inscrivent auront un compte créé pour eux sur Shopify. [Afficher les clients](/admin/customers?query=&accepts_marketing=1)",
+        "fr": "Les clients qui s'inscrivent auront un compte créé pour eux dans Shopify. [Afficher les clients](/admin/customers?query=&accepts_marketing=1)",
         "hi": "साइन अप करने वाले कोई भी ग्राहक, के पास Shopify में खाता बनाया जाएगा. [ग्राहक देखें](/admin/customers?query=&accepts_marketing=1)",
         "it": "Qualsiasi cliente che si iscrive avrà un account creato appositamente su Shopify. [Visualizza clienti](/admin/customers?query=&accepts_marketing=1)",
         "ja": "サインアップしたお客様は、Shopifyでアカウントが作成されます。[お客様を表示](/admin/customers?query=&accepts_marketing=1)",
         "ko": "가입한 고객은 Shopify에서 생성된 계정을 보유하게 됩니다. [고객보기](/admin/customers? query=& accepts_marketing=1)",
         "nb": "Alle kunder som melder seg på, vil få opprettet en konto i Shopify. [Se kunder](/admin/customers?query=&accepts_marketing=1)",
         "nl": "Voor alle klanten die zich aanmelden, wordt een Shopify-account gemaakt. [Klanten weergeven](/admin/customers?query=&accepts_marketing=1)",
-        "pt-BR": "Todos os clientes que se inscreverem terão uma conta criada para eles na Shopify. [View customers](/admin/customers?query=&accepts_marketing=1)",
+        "pt-BR": "Todos os clientes que se inscreverem terão uma conta criada para eles na Shopify. [Visualizar clientes](/admin/customers?query=&accepts_marketing=1)",
         "pt-PT": "Será criada uma conta na Shopify para todos os clientes que se registarem. [Ver clientes](/admin/customers?query=&accepts_marketing=1)",
         "sv": "Alla kunder som registrerar sig kommer att få ett konto skapat i Shopify. [Visa kunder](/ admin / kunder? Query = & accepts_marketing = 1)",
         "th": "ระบบจะสร้างบัญชีผู้ใช้ใน Shopify ให้แก่ลูกค้ารายใดก็ตามที่ลงทะเบียน [ดูลูกค้า](/admin/customers?query=&accepts_marketing=1)",

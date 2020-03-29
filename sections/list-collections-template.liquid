@@ -1,52 +1,82 @@
-{% comment %}
-  This page represents the /collections and /products pages.
-{% endcomment %}
+{% include 'breadcrumb' %}
 
-{% case section.settings.grid %}
-  {% when 2 %}
-    {%- assign grid_item_width = 'medium-up--one-half' -%}
-  {% when 3 %}
-    {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
-  {% when 4 %}
-    {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
-  {% when 5 %}
-    {%- assign grid_item_width = 'small--one-half medium-up--one-fifth' -%}
-  {% else %}
-    {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
-{% endcase %}
+{% if section.settings.layout == 'grid' %}
+  {% case section.settings.grid %}
+    {% when '2' %}
+      {%- assign featured_collection_width = 'one-half' -%}
+      {%- assign featured_collection_size = '485x' -%}
+      {%- assign width = '480' -%}
+      {%- assign height = '480' -%}
+    {% when '3' %}
+      {%- assign featured_collection_width = 'small--one-half one-third' %}
+      {%- assign featured_collection_size = '315x' %}
+      {%- assign width = '310' -%}
+      {%- assign height = '310' -%}
+    {% when '4' %}
+      {%- assign featured_collection_width = 'small--one-half one-quarter' %}
+      {%- assign featured_collection_size = '225x' %}
+      {%- assign width = '225' -%}
+      {%- assign height = '225' -%}
+    {% when '5' %}
+      {%- assign featured_collection_width = 'small--one-half medium--one-third large--one-fifth' %}
+      {%- assign featured_collection_size = '175x' %}
+      {%- assign width = '175' -%}
+      {%- assign height = '175' -%}
+  {% endcase %}
+{% endif %}
 
-<h1>{{ page_title }}</h1>
-
- <div class="grid grid--uniform">
-  {% if section.settings.display_type == 'all' %}
-    {% case section.settings.sort %}
-      {% when 'products_high' or 'products_low' %}
-        {%- assign collections = collections | sort: 'all_products_count' -%}
-      {% when 'date' or 'date_reversed' %}
-        {%- assign collections = collections | sort: 'published_at' -%}
-    {% endcase %}
-    {% if section.settings.sort == 'products_low' or section.settings.sort == 'date' or section.settings.sort == 'alphabetical' %}
-      {% for collection in collections %}
-        <div class="grid__item {{ grid_item_width }}">
-          {% include 'collection-grid-item' %}
-        </div>
-      {% endfor %}
+{% if section.settings.display_type == 'all' %}
+  {% case section.settings.sort %}
+    {% when 'products_high' or 'products_low' %}
+      {%- assign list_collections = collections | sort: 'all_products_count' -%}
+    {% when 'date' or 'date_reversed' %}
+      {%- assign list_collections = collections | sort: 'published_at' -%}
     {% else %}
-      {% for collection in collections reversed %}
-        <div class="grid__item {{ grid_item_width }}">
-          {% include 'collection-grid-item' %}
-        </div>
+      {%- assign list_collections = collections -%}
+  {% endcase %}
+  {% if section.settings.sort == 'products_low' or section.settings.sort == 'date' or section.settings.sort == 'alphabetical' %}
+    <div class="{% if section.settings.layout == 'grid' %}grid text-center {% endif %}list-collections-template" data-section-id="{{ section.id }}" data-section-type="list-collections-template">
+      {% for collection in list_collections %}
+        {% unless collection.handle == 'frontpage' %}
+          {% if section.settings.layout == 'list' %}
+            {% include 'collection-list-item' %}
+            {% unless forloop.last %}<hr>{% endunless %}
+          {% else %}
+            {% assign featured = collection.handle %}
+            {% include 'featured-collection' %}
+          {% endif %}
+        {% endunless %}
       {% endfor %}
-    {% endif %}
+    </div>
   {% else %}
-    {% for block in section.blocks %}
-      <div class="grid__item {{ grid_item_width }}">
-        {%- assign collection = collections[block.settings.collection] -%}
-        {% include 'collection-grid-item' %}
-      </div>
-    {% endfor %}
+    <div class="{% if section.settings.layout == 'grid' %}grid text-center {% endif %}collection-grid" data-section-id="{{ section.id }}" data-section-type="list-collections-template">
+      {% for collection in list_collections reversed %}
+        {% unless collection.handle == 'frontpage' %}
+          {% if section.settings.layout == 'list' %}
+            {% include 'collection-list-item' %}
+            {% unless forloop.last %}<hr>{% endunless %}
+          {% else %}
+            {% assign featured = collection.handle %}
+            {% include 'featured-collection' %}
+          {% endif %}
+        {% endunless %}
+      {% endfor %}
+    </div>
   {% endif %}
-</div>
+{% else %}
+  <div class="{% if section.settings.layout == 'grid' %}grid text-center {% endif %}list-collections-template" data-section-id="{{ section.id }}" data-section-type="list-collections-template">
+    {% for block in section.blocks %}
+      {% if section.settings.layout == 'list' %}
+        {% assign collection = collections[block.settings.collection] %}
+        {% include 'collection-list-item' %}
+        {% unless forloop.last %}<hr>{% endunless %}
+      {% else %}
+        {% assign featured = block.settings.collection %}
+        {% include 'featured-collection' %}
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
 
 
 
@@ -79,7 +109,7 @@
         "da": "Alle dine kollektioner vises som standard. Hvis du vil tilpasse din liste, skal du vælge \"Valgte\" og tilføje kollektioner.",
         "de": "Alle Kategorien sind automatisch gelistet. Zum Ändern der Liste wählen Sie 'Ausgewählt' und fügen Sie Kategorien hinzu.",
         "en": "All of your collections are listed by default. To customize your list, choose 'Selected' and add collections.",
-        "es": "Todas tus colecciones se muestran por defecto. Para personalizar tu lista, elige 'Seleccionadas' y agrega colecciones.",
+        "es": "Todas tus colecciones están enlistadas por defecto. Para personalizar tu lista, elige 'Seleccionadas' y agrega colecciones.",
         "fi": "Kaikki kokoelmasi näkyvät oletuksena. Voit mukauttaa luetteloa napauttamalla \"Valittu\" ja lisäämällä kokoelmia.",
         "fr": "Toutes vos collections sont listées par défaut. Pour personnaliser votre liste, cliquez sur « Sélection » et ajoutez des collections.",
         "hi": "आपके सभी कलेक्शन्स डिफ़ॉल्ट रूप से सूचीबद्ध हैं. अपनी सूची कस्टमाइज़ करने के लिए, 'चयनित' चुनें और कलेक्शन्स जोड़ें.",
@@ -136,7 +166,7 @@
             "ko": "모두",
             "nb": "Alle",
             "nl": "Alle",
-            "pt-BR": "Todos",
+            "pt-BR": "Tudo",
             "pt-PT": "Tudo",
             "sv": "Alla",
             "th": "ทั้งหมด",
@@ -165,6 +195,79 @@
             "th": "เลือกแล้ว",
             "zh-CN": "已选",
             "zh-TW": "已選取"
+          }
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": {
+        "da": "Vælg layout",
+        "de": "Layout auswählen",
+        "en": "Select layout",
+        "es": "Seleccionar diseño",
+        "fi": "Valitse asettelu",
+        "fr": "Sélectionner la mise en page",
+        "hi": "लेआउट चुनें",
+        "it": "Seleziona layout",
+        "ja": "レイアウトを選択する",
+        "ko": "레이아웃 표시",
+        "nb": "Velg oppsett",
+        "nl": "Selecteer opmaak",
+        "pt-BR": "Selecionar layout",
+        "pt-PT": "Selecionar esquema",
+        "sv": "Välj layout",
+        "th": "เลือกเลย์เอาต์",
+        "zh-CN": "选择布局",
+        "zh-TW": "選擇版面配置"
+      },
+      "default": "grid",
+      "options": [
+        {
+          "value": "grid",
+          "label": {
+            "da": "Gitter",
+            "de": "Raster",
+            "en": "Grid",
+            "es": "Cuadrícula",
+            "fi": "Ruudukko",
+            "fr": "Grille",
+            "hi": "ग्रिड",
+            "it": "Griglia",
+            "ja": "グリッド",
+            "ko": "그리드",
+            "nb": "Rutenett",
+            "nl": "Raster",
+            "pt-BR": "Grade",
+            "pt-PT": "Grelha",
+            "sv": "Rutnät",
+            "th": "กริด",
+            "zh-CN": "网格",
+            "zh-TW": "網格"
+          }
+        },
+        {
+          "value": "list",
+          "label": {
+            "da": "Liste",
+            "de": "Liste",
+            "en": "List",
+            "es": "Lista",
+            "fi": "Luettelo",
+            "fr": "Liste",
+            "hi": "सूची",
+            "it": "Elenco",
+            "ja": "リスト",
+            "ko": "목록",
+            "nb": "Liste",
+            "nl": "Lijst",
+            "pt-BR": "Lista",
+            "pt-PT": "Lista",
+            "sv": "Lista",
+            "th": "รายการ",
+            "zh-CN": "列表",
+            "zh-TW": "清單"
           }
         }
       ]
@@ -271,7 +374,7 @@
             "fr": "Alphabétique, de A à Z",
             "hi": "वर्णमाला के अनुसार: A-Z",
             "it": "In ordine alfabetico, A - Z",
-            "ja": "アルファベット順, A-Z",
+            "ja": "アルファベット順、 A-Z",
             "ko": "알파벳순, A-Z",
             "nb": "Alfabetisk, A–Å",
             "nl": "Alfabetisch: A-Z",
@@ -294,7 +397,7 @@
             "fr": "Alphabétique, de Z à A",
             "hi": "वर्णमाला के अनुसार: Z-A",
             "it": "In ordine alfabetico, Z - A",
-            "ja": "アルファベット順, Z-A",
+            "ja": "アルファベット順、 Z-A",
             "ko": "알파벳순, Z-A",
             "nb": "Alfabetisk, Å–A",
             "nl": "Alfabetisch: Z-A",
@@ -310,7 +413,7 @@
           "value": "date",
           "label": {
             "da": "Dato, ældre til nyere",
-            "de": "Datum, alt zu neu",
+            "de": "Datum: alt bis neu",
             "en": "Date, old to new",
             "es": "Fecha: antiguo(a) a reciente",
             "fi": "Päivämäärä vanhimmasta uusimpaan",
@@ -333,7 +436,7 @@
           "value": "date_reversed",
           "label": {
             "da": "Dato, nyere til ældre",
-            "de": "Datum, neu zu alt",
+            "de": "Datum: neu bis alt",
             "en": "Date, new to old",
             "es": "Fecha: reciente a antiguo(a)",
             "fi": "Päivämäärä uusimmasta vanhimpaan",
@@ -355,7 +458,7 @@
       ]
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "grid",
       "label": {
         "da": "Kollektioner pr. række",
@@ -377,10 +480,101 @@
         "zh-CN": "每行产品系列数",
         "zh-TW": "每列商品系列數"
       },
-      "min": 2,
-      "max": 5,
-      "step": 1,
-      "default": 3
+      "default": "3",
+      "options": [
+        {
+          "value": "2",
+          "label": {
+            "da": "2",
+            "de": "2",
+            "en": "2",
+            "es": "2",
+            "fi": "2",
+            "fr": "2",
+            "hi": "2",
+            "it": "2",
+            "ja": "2",
+            "ko": "2",
+            "nb": "2",
+            "nl": "2",
+            "pt-BR": "2",
+            "pt-PT": "2",
+            "sv": "2",
+            "th": "2",
+            "zh-CN": "2",
+            "zh-TW": "2"
+          }
+        },
+        {
+          "value": "3",
+          "label": {
+            "da": "3",
+            "de": "3",
+            "en": "3",
+            "es": "3",
+            "fi": "3",
+            "fr": "3",
+            "hi": "3",
+            "it": "3",
+            "ja": "3",
+            "ko": "3",
+            "nb": "3",
+            "nl": "3",
+            "pt-BR": "3",
+            "pt-PT": "3",
+            "sv": "3",
+            "th": "3",
+            "zh-CN": "3",
+            "zh-TW": "3"
+          }
+        },
+        {
+          "value": "4",
+          "label": {
+            "da": "4",
+            "de": "4",
+            "en": "4",
+            "es": "4",
+            "fi": "4",
+            "fr": "4",
+            "hi": "4",
+            "it": "4",
+            "ja": "4",
+            "ko": "4",
+            "nb": "4",
+            "nl": "4",
+            "pt-BR": "4",
+            "pt-PT": "4",
+            "sv": "4",
+            "th": "4",
+            "zh-CN": "4",
+            "zh-TW": "4"
+          }
+        },
+        {
+          "value": "5",
+          "label": {
+            "da": "5",
+            "de": "5",
+            "en": "5",
+            "es": "5",
+            "fi": "5",
+            "fr": "5",
+            "hi": "5",
+            "it": "5",
+            "ja": "5",
+            "ko": "5",
+            "nb": "5",
+            "nl": "5",
+            "pt-BR": "5",
+            "pt-PT": "5",
+            "sv": "5",
+            "th": "5",
+            "zh-CN": "5",
+            "zh-TW": "5"
+          }
+        }
+      ]
     }
   ],
   "blocks": [
